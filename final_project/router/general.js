@@ -23,7 +23,7 @@ public_users.get("/isbn/:isbn", function (req, res) {
 
 // Get book details based on author
 public_users.get("/author/:author", function (req, res) {
-  let capitalAuthor = req.params.author.charAt(0).toUpperCase() + author.slice(1);
+  let author = req.params.author
   let booksIDArr = Object.keys(books);
   let booksArr = [];
   for (let id = 1; id <= booksIDArr.length; id++) {
@@ -31,9 +31,8 @@ public_users.get("/author/:author", function (req, res) {
   }
   let finalArr = []
   for (let authors in booksArr) {
-    if (booksArr[authors].author === capitalAuthor) {
+    if (booksArr[authors].author.toUpperCase() === author.toUpperCase()) {
       finalArr.push(booksArr[authors])
-      console.log(booksArr[authors]);
     }
   }
   return res.send(finalArr);
@@ -41,8 +40,19 @@ public_users.get("/author/:author", function (req, res) {
 
 // Get all books based on title
 public_users.get("/title/:title", function (req, res) {
-  //Write your code here
-  return res.status(300).json({ message: "Yet to be implemented" });
+  let title = req.params.title
+  let booksIDArr = Object.keys(books);
+  let booksArr = [];
+  for (let id = 1; id <= booksIDArr.length; id++) {
+    booksArr.push(books[id]);
+  }
+  let finalArr = []
+  for (let titles in booksArr) {
+    if (booksArr[titles].title.toUpperCase() === title.toUpperCase()) {
+      finalArr.push(booksArr[titles])
+    }
+  }
+  return res.send(finalArr);
 });
 
 //  Get book review
